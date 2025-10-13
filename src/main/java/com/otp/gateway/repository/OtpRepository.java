@@ -9,10 +9,9 @@ import java.util.Optional;
 
 public interface OtpRepository extends JpaRepository<Otp, Long> {
     Optional<Otp> findByUserAndCodeAndUsedFalseAndExpiryTimeAfter(
-            User user, 
-            String code, 
-            LocalDateTime now
-    );
-    
+            User user,
+            String code,
+            LocalDateTime now);
+
     Optional<Otp> findTopByUserOrderByExpiryTimeDesc(User user);
 }
