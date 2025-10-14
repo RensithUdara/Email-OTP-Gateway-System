@@ -18,16 +18,14 @@ public class AuthenticationController {
             @RequestParam String email,
             @RequestParam String password,
             @RequestParam String firstName,
-            @RequestParam String lastName
-    ) {
+            @RequestParam String lastName) {
         return ResponseEntity.ok(authService.register(email, password, firstName, lastName));
     }
 
     @PostMapping("/verify-email")
     public ResponseEntity<String> verifyEmail(
             @RequestParam String email,
-            @RequestParam String otp
-    ) {
+            @RequestParam String otp) {
         authService.verifyEmail(email, otp);
         return ResponseEntity.ok("Email verified successfully");
     }
@@ -35,8 +33,7 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<String> authenticate(
             @RequestParam String email,
-            @RequestParam String password
-    ) {
+            @RequestParam String password) {
         return ResponseEntity.ok(authService.authenticate(email, password));
     }
 
@@ -50,8 +47,7 @@ public class AuthenticationController {
     public ResponseEntity<String> resetPassword(
             @RequestParam String email,
             @RequestParam String otp,
-            @RequestParam String newPassword
-    ) {
+            @RequestParam String newPassword) {
         authService.resetPassword(email, otp, newPassword);
         return ResponseEntity.ok("Password reset successful");
     }
