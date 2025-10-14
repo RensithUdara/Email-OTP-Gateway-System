@@ -16,10 +16,10 @@ import java.time.LocalDateTime;
 public class OtpService {
     private final OtpRepository otpRepository;
     private final EmailService emailService;
-    
+
     @Value("${application.otp.length:6}")
     private int otpLength;
-    
+
     @Value("${application.otp.rate-limit:3}")
     private int maxAttempts;
 
@@ -29,15 +29,15 @@ public class OtpService {
         // Check for existing OTP
         otpRepository.findTopByUserOrderByExpiryTimeDesc(user)
                 .ifPresent(existingOtp -> {
-                    if (existingOtp.getExpiryTime().isAfter(LocalDateTime.now()) && 
-                        existingOtp.getAttempts() >= maxAttempts) {
+                    if (existingOtp.getExpiryTime().isAfter(LocalDateTime.now()) &&
+                            existingOtp.getAttempts() >= maxAttempts) {
                         throw new RuntimeException("Too many OTP attempts. Please try again later.");
                     }
                 });
 
         // Generate new OTP
         String otpCode = generateOtp();
-        
+
         // Save OTP
         Otp otp = Otp.builder()
                 .user(user)
@@ -46,9 +46,9 @@ public class OtpService {
                 .attempts(0)
                 .used(false)
                 .build();
-        
+
         otpRepository.save(otp);
-        
+
         // Send OTP via email
         emailService.sendOtpEmail(user.getEmail(), otpCode);
     }
@@ -63,7 +63,7 @@ public class OtpService {
         }
 
         otp.setAttempts(otp.getAttempts() + 1);
-        
+
         if (!otp.getCode().equals(code)) {
             otpRepository.save(otp);
             return false;
