@@ -32,7 +32,7 @@ public class AuthenticationService {
                 .build();
 
         userRepository.save(user);
-        
+
         try {
             otpService.generateAndSendOtp(user);
             return "Registration successful. Please verify your email with the OTP sent.";
@@ -71,7 +71,7 @@ public class AuthenticationService {
     public void initiatePasswordReset(String email) throws MessagingException {
         var user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        
+
         otpService.generateAndSendOtp(user);
     }
 
