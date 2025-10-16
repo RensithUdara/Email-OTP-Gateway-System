@@ -27,7 +27,8 @@ public class RateLimitingAspect {
 
     @Around("@annotation(com.otp.gateway.annotation.RateLimit)")
     public Object rateLimit(ProceedingJoinPoint joinPoint) throws Throwable {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+                .getRequest();
         String ip = request.getRemoteAddr();
         String key = "rate_limit:" + ip;
 
