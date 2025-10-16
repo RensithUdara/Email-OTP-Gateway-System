@@ -60,7 +60,7 @@ class OtpServiceTest {
         Otp otp = new Otp();
         otp.setCode(otpCode);
         otp.setUser(user);
-        otp.setExpiryDate(LocalDateTime.now().plusMinutes(5));
+        otp.setExpiryTime(LocalDateTime.now().plusMinutes(5));
         when(otpRepository.findByUserAndCode(user, otpCode)).thenReturn(Optional.of(otp));
 
         // Act
@@ -80,7 +80,7 @@ class OtpServiceTest {
         Otp otp = new Otp();
         otp.setCode(otpCode);
         otp.setUser(user);
-        otp.setExpiryDate(LocalDateTime.now().minusMinutes(1));
+        otp.setExpiryTime(LocalDateTime.now().minusMinutes(1));
         when(otpRepository.findByUserAndCode(user, otpCode)).thenReturn(Optional.of(otp));
 
         // Act
